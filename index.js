@@ -1,5 +1,7 @@
 const express = require('express');
 const os = require('os');
+const path = require('path');
+
 const app = express();
 
 app.get('/', (req, res) => {
@@ -23,6 +25,15 @@ app.get('/', (req, res) => {
     // Send the server's IP address in the response
     res.send(`Server IP address is: ${serverIp}`);
 });
+app.get('/:loader_id', (req, res) => {
+    const filePath = path.join(__dirname, 'loader.txt');
+
+    res.sendFile(filePath, err => {
+      if (err) {
+        res.status(500).send('Internal Server Error');
+      }
+    }); 
+})
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
