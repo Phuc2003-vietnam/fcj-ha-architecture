@@ -3,6 +3,7 @@ const os = require('os');
 const path = require('path');
 
 const app = express();
+let memoryLeak = [];
 
 app.get('/', (req, res) => {
     // Get the server's IPv4 address
@@ -17,6 +18,10 @@ app.get('/', (req, res) => {
                 break;
             }
         }
+    }
+
+    for (let i = 0; i < 100; i++) {
+        memoryLeak.push(new Array(10000).fill('*'));
     }
 
     // Log the server's IP address to the console
